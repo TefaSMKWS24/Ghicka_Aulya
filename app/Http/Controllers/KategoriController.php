@@ -9,14 +9,14 @@ use Illuminate\Http\Redirect;
 use Illuminate\Http\Validator;
 {
 
-class KasirController extends Controller
+class KategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('kasir.index');
+        return view('kategori.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class KasirController extends Controller
      */
     public function create()
     {
-        return view('kasir.create');
+        return view('kategori.create');
     }
 
     /**
@@ -33,23 +33,22 @@ class KasirController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_kasir'=> 'required',
-            'nama_kasir'=> 'required',
-            'harga'=> 'reqired',
-            'stok'=> 'required',
             'kode_kategori'=> 'required',
+            'nama_kategori'=> 'required',
+            'supplier'=> 'reqired',
+
         ]);
 
         $data = [
-            'kode_kasir' => $request->kode_kasir,
-            'nama_kasir' => $request->nama_kasir,
-            'harga' => $request->harga,
-            'stok' => $request->stok,
             'kode_kategori' => $request->kode_kategori,
+            'nama_kategori' => $request->nama_kategori,
+            'supplier' => $request->supplier,
+
         ]
 
-        DB::table('kasir')->insert($data);
-        return redirect()->route('kasir.index');
+        DB::table('kategori')->insert($data);
+        return redirect()->route('kategori.index');
+
     }
 
     /**
@@ -57,8 +56,9 @@ class KasirController extends Controller
      */
     public function show(string $id)
     {
-        DB::table('kasir')->where('kode_kasir', $id)->delete();
-        return redirect()->route('kasir.index');
+        DB::table('kategori')->where('kode_kategori', $id)->update($data);
+        return redirect()->route('kategori.index');
+
     }
 
     /**
@@ -66,10 +66,7 @@ class KasirController extends Controller
      */
     public function edit(string $id)
     {
-        DB::table('kasir')->where('kode_kasir', $id)->delete();
-        return redirect()->route('kasir.index');
 
-    }
     }
 
     /**
@@ -78,23 +75,21 @@ class KasirController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'kode_kasir'=> 'required',
-            'nama_kasir'=> 'required',
-            'harga'=> 'reqired',
-            'stok'=> 'required',
             'kode_kategori'=> 'required',
+            'nama_kategori'=> 'required',
+            'supplier'=> 'reqired',
+
         ]);
 
         $data = [
-            'kode_kasir' => $request->kode_kasir,
-            'nama_kasir' => $request->nama_kasir,
-            'harga' => $request->harga,
-            'stok' => $request->stok,
             'kode_kategori' => $request->kode_kategori,
+            'nama_kategori' => $request->nama_kategori,
+            'supplier' => $request->supplier,
+
         ]
 
-        DB::table('kasir')->insert($data);
-        return redirect()->route('kasir.index');
+            DB::table('kategori')->insert($data);
+        return redirect()->route('kategori.index')
     }
 
     /**
@@ -102,7 +97,7 @@ class KasirController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('kasir')->where('kode_kasir', $id)->delete();
-        return redirect()->route('kasir.index');
+        DB::table('kategori')->where('kode_kategori', $id)->update($data);
+        return redirect()->route('kategori.index');
     }
 }

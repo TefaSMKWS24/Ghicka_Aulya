@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use illuminate\Http\Request;
+
+use Illuminate\support\facedes\DB;
+use Illuminate\support\facedes\Redirect;
+use Illuminate\support\facedes\Validator;
+
 
 class PelangganController extends Controller
 {
@@ -19,7 +24,7 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        //
+        return view('pelanggan.create');
     }
 
     /**
@@ -27,7 +32,23 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kode_pelanggan' =>'required',
+            'nama_pelanggan' =>'required',
+            'nohp' => 'required',
+
+        ]);
+
+        $data = [
+            'kode_pelanggan' => $request->kode_pelanggan,
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'nohp' => $request->nohp,
+
+        ];
+
+        DB::table('pelanggan')->insert($data);
+        return redirect()->route('pelanggan.index');
+
     }
 
     /**
@@ -35,7 +56,8 @@ class PelangganController extends Controller
      */
     public function show(string $id)
     {
-        //
+        DB::table('pelanggan')->where('kode_pelanggan', $id)->update($data);
+        return redirect()->route('pelanggan.index');
     }
 
     /**
@@ -43,7 +65,7 @@ class PelangganController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
@@ -51,7 +73,23 @@ class PelangganController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'kode_pelanggan' =>'required',
+            'nama_pelanggan' =>'required',
+            'nohp' => 'required',
+
+        ]);
+
+        $data = [
+            'kode_pelanggan' => $request->kode_pelanggan,
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'nohp' => $request->nohp,
+
+        ];
+
+        DB::table('pelanggan')->insert($data);
+        return redirect()->route('pelanggan.index');
+
     }
 
     /**
@@ -59,6 +97,7 @@ class PelangganController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('pelanggan')->where('kode_pelanggan', $id)->update($data);
+        return redirect()->route('pelanggan.index');
     }
 }
