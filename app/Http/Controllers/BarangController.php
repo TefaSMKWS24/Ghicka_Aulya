@@ -80,6 +80,8 @@ use Illuminate\Http\Validator;
      */
     public function update(Request $request, string $id);
     {
+
+
         $request->validate([
             'kode_barang'=> 'required',
             'nama_barang'=> 'required',
@@ -98,6 +100,7 @@ use Illuminate\Http\Validator;
 
         DB::table('barang')->where('kode_barang', $id)->update($data);
         return redirect()->route('barang.index');
+
     }
 
     /**
