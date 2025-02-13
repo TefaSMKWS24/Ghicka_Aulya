@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Redirect;
-use Illuminate\Http\Validator;
-{
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+
 
 class KategoriController extends Controller
 {
@@ -25,6 +24,8 @@ class KategoriController extends Controller
     public function create()
     {
         return view('kategori.create');
+
+
     }
 
     /**
@@ -32,23 +33,7 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'kode_kategori'=> 'required',
-            'nama_kategori'=> 'required',
-            'supplier'=> 'reqired',
-
-        ]);
-
-        $data = [
-            'kode_kategori' => $request->kode_kategori,
-            'nama_kategori' => $request->nama_kategori,
-            'supplier' => $request->supplier,
-
-        ]
-
-        DB::table('kategori')->insert($data);
-        return redirect()->route('kategori.index');
-
+        //
     }
 
     /**
@@ -56,9 +41,7 @@ class KategoriController extends Controller
      */
     public function show(string $id)
     {
-        DB::table('kategori')->where('kode_kategori', $id)->update($data);
-        return redirect()->route('kategori.index');
-
+        //
     }
 
     /**
@@ -66,6 +49,8 @@ class KategoriController extends Controller
      */
     public function edit(string $id)
     {
+        $kategori = DB::table('kategori')->where('kode_kategori', $id)->first();
+        return view('kategori.edit', compact('kategori'));
 
     }
 
@@ -75,21 +60,18 @@ class KategoriController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'kode_kategori'=> 'required',
-            'nama_kategori'=> 'required',
-            'supplier'=> 'reqired',
+            'nama_kategori' => 'required',
+            'nama_supplier' => 'required',
 
         ]);
 
         $data = [
-            'kode_kategori' => $request->kode_kategori,
             'nama_kategori' => $request->nama_kategori,
-            'supplier' => $request->supplier,
+            'nama_supplier' => $request->nama_supplier,
+        ];
 
-        ]
-
-            DB::table('kategori')->insert($data);
-        return redirect()->route('kategori.index')
+        DB::table('kategori')->where('kode_kategori', $id)->update($data);
+        return Redirect::route('kategori.index')->with('success', 'Data Berhasil Diubah');
     }
 
     /**
@@ -97,7 +79,7 @@ class KategoriController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('kategori')->where('kode_kategori', $id)->update($data);
-        return redirect()->route('kategori.index');
+        DB::table('kategori')->where('kode_kategori', $id)->delete();
+        return Redirect::route('kategori.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -5,20 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Redirect;
-use Illuminate\Http\Validator;
+use illuminate\Support\Facades\Redirect;
+use illuminate\Support\Facades\Validator;
+
+class BarangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
-     class BarangController extends Controller
-     {
-
-
-   public function index()
+    public function index()
     {
-       return view('barang.index');
+        return view('barang.index');
     }
 
     /**
@@ -26,7 +23,7 @@ use Illuminate\Http\Validator;
      */
     public function create()
     {
-       return view('barang.create');
+        return view('barang.create');
     }
 
     /**
@@ -36,81 +33,56 @@ use Illuminate\Http\Validator;
     {
 
     }
+
     /**
      * Display the specified resource.
      */
-    public function update(string $id)
+    public function show(string $id)
     {
-        $request->validate([
-            'kode_barang'=> 'required',
-            'nama_barang'=> 'required',
-            'harga'=> 'reqired',
-            'stok'=> 'required',
-            'kode_kategori'=> 'required',
-        ]);
-
-         $data = ([
-            'kode_barang' => $request->kode_barang,
-            'nama_barang' => $request->nama_barang,
-            'harga' => $request->harga,
-            'stok' => $request->stok,
-            'kode_kategori' => $request->kode_kategori,
-         ]);
-
-
-        DB::table('barang')->insert($data);
-        return redirect()->route('barang.index', [
-
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-         public function edit(string $id)
+    public function edit(string $id)
     {
-        $barang = DB::table('barang')->where('kode_barang', $id)->first();
+        $barang = DB::table('barang')->where('id', $id)->first();
         return view('barang.edit', compact('barang'));
     }
-
-
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id);
+    public function update(Request $request, string $id)
     {
-
-
         $request->validate([
-            'kode_barang'=> 'required',
-            'nama_barang'=> 'required',
-            'harga'=> 'reqired',
-            'stok'=> 'required',
-            'kode_kategori'=> 'required',
+            'nama_barang' => 'required',
+            'harga' => 'required',
+            'stok' => 'required',
+            'kode_kategori' => 'required',
         ]);
 
         $data = [
-            'kode_barang' => $request->kode_barang,
             'nama_barang' => $request->nama_barang,
             'harga' => $request->harga,
             'stok' => $request->stok,
             'kode_kategori' => $request->kode_kategori,
         ];
 
-        DB::table('barang')->where('kode_barang', $id)->update($data);
-        return redirect()->route('barang.index');
+        DB::table('barang')->where('id', $id)->update($data);
+        return redicet()->view('barang.index',);
+        }
 
-    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        DB::table('barang')->where('kode_barang', $id)->delete();
-        return redirect()->route('barang.index');
-    }
 
-  }
+        Db::table('barang')->where('id', $id)->delete();
+        return redirect()->route('barang.index');
+
+    }
 }

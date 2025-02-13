@@ -54,7 +54,7 @@ class TransaksiController extends Controller
 
         ];
 
-        DB::table('data_barang')->insert($data)
+        DB::table('transaksi')->insert($data);
         return redirect()->route('transaksi.index');
 
     }
@@ -95,8 +95,8 @@ class TransaksiController extends Controller
 
         ];
 
-        DB::table('data_barang')->insert($data)
-        return redirect()->route('transaksi.index');
+        DB::table('transaksi')->where('kode_transaksi', $id)->update($data);
+        return redirect()->route('transaksi.edit');
     }
 
     /**
