@@ -19,7 +19,6 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
-
         foreach ($guards as $guard) {
             if ($guard == "kasir" && Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOMEKASIR);
@@ -30,5 +29,6 @@ class RedirectIfAuthenticated
         }
 
         return $next($request);
+
     }
 }
